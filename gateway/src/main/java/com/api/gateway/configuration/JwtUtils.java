@@ -15,7 +15,7 @@ import java.util.Map;
 public class JwtUtils {
 
     // Use a fixed Base64-encoded secret key (must be 256-bit or longer)
-    private static final String SECRET_KEY = "myverysecurejwtsecretkeythatismorethan32chars";
+    private static final String SECRET_KEY = "1954c6ea48498325cebc7b5194a81c4f18996c5933cfcd60f850a33a1aeb25f3";
 
     private Key getSigningKey() {
         byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
@@ -52,11 +52,7 @@ public class JwtUtils {
                 .get("role", String.class);
     }
 
-    public Claims validateToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public void validateToken(String token) {
+        Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
     }
 }

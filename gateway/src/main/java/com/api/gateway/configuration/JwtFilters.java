@@ -1,5 +1,4 @@
-package com.api.gateway.filter;
-
+package com.api.gateway.configuration;
 import com.api.gateway.configuration.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -21,7 +20,7 @@ public class JwtFilters implements GlobalFilter, Ordered {
         String path = exchange.getRequest().getURI().getPath();
 
         // Only apply filter for restricted routes
-        if (path.startsWith("/quizmicro") || path.startsWith("/question")) {
+        if (path.startsWith("/quizmicro") || path.startsWith("/question-service/question/getScore")) {
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -50,10 +49,14 @@ public class JwtFilters implements GlobalFilter, Ordered {
 
     private boolean validateToken(String token) {
         try {
-            jwtUtil.validateToken(token); // will throw exception if invalid
+            System.out.println("🔐 Validating Token: " + token);
+            jwtUtil.validateToken(token);
+            System.out.println("✅ Token is valid.");
             return true;
         } catch (Exception e) {
+            System.out.println("❌ Invalid Token: " + e.getMessage());
             return false;
         }
     }
+
 }

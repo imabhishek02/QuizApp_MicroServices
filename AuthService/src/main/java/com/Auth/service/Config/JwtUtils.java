@@ -13,8 +13,8 @@ import java.util.Map;
 
 @Component
 public class JwtUtils {
-    SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    String SECRET_KEY = Encoders.BASE64.encode(key.getEncoded());
+   // SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    String SECRET_KEY = "1954c6ea48498325cebc7b5194a81c4f18996c5933cfcd60f850a33a1aeb25f3";
 
     public String generateToken(String username, String role) {
         Map<String, Object> claims = new HashMap<>();
